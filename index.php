@@ -8,15 +8,17 @@ function checkURLAvailability($url) {
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_FAILONERROR, true); // Voeg deze regel toe
+    curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
     // Controleer de HTTP-statuscode
     if ($httpCode == 200) {
-        $message = "Ja RVH KAN IETS.";
+        $message = "Ja RVH KAN IETS!!.";
         $statusClass = "available";
     } else {
-        $message = "Nee ";
+        $message = "Nee";
         $statusClass = "unavailable";
     }
 
@@ -29,7 +31,7 @@ function checkURLAvailability($url) {
     </head>
     <body>
         <div class="' . $statusClass . '">
-            <h1 class="centered">' . $message . '</h1>
+            <div class="centered">' . $message . '</div>
         </div>
     </body>
     </html>
